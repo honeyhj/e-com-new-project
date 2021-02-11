@@ -1,0 +1,34 @@
+.header{
+    width: 100%;
+    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9 !important;
+    background:#2222;
+}
+.header .header-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-auto-rows: 80px;
+    grid-gap: 10px;
+}
+.header .header-item2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .header-item2 li{
+    list-style:none;
+    cursor: pointer;
+    font-size: 20px;
+    text-transform: capitalize;
+}
+.sub-header{
+    width: 100%;
+    height: 50px;
+    background: #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
