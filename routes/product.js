@@ -43,6 +43,18 @@ router.post("/uploadProduct", async (req, res) => {
     return res.status(200).json({ success: true });
   });
 });
+router.post("/get-products", async (req, res)=>{
+  const {skip,limit} = req.body.variables;
+  console.log(skip,limit);
+  let Limit = req.body.variables.limit?parseInt(req.body.variables.limit):100;
+  let Skip = req.body.variables.skip?parseInt(req.body.variables.skip):0;
+  Product.find().skip(Skip).limit(Limit).exec((err,product)=>{
+    if(err){
+      return res.status(400).json({success:false,err})
+    }
+    res.status(200).json({success: true ,product,postSize:product.length})
+  })
+})
 
 module.exports = router;
 
