@@ -14,7 +14,7 @@ const Product = () => {
             <h3>Lorem ipsum dolor sit amet consectetur.</h3>
             <p>315 /-</p>
             <div className="show-addCart">
-                <button>Add to cart</button>
+                <button type="button" className="btn">Add to cart Button</button>
             </div>
         </div>
     );
