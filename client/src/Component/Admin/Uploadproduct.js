@@ -3,7 +3,7 @@ import CKEditor from "react-ckeditor-component";
 import { Multiselect } from "multiselect-react-dropdown";
 import Dropzone from "react-dropzone";
 import axios from "axios";
-import URL from "../User/Url";
+import URL, { sub } from "../User/Url";
 export default class Uploadproduct extends Component {
   constructor(props) {
     super(props);
@@ -59,6 +59,52 @@ export default class Uploadproduct extends Component {
   //       console.log(err);
   //     });
   // };
+  category = (e,t) =>{
+    console.log(t);
+    this.state.data.map(item => {
+      if(item.CategoryName === t.name && item.SubCategory.length > 0){
+        const get = item.SubCategory.map(subCat =>{
+          return(
+            {name:subCat.Name}
+          )
+        })
+        this.setState({sub:get})
+      }
+    })
+    
+  }
+
+
+  // category = (selectedList, selectedItem) => {
+  //   this.setState({ category: selectedItem.name })
+  //   {
+  //     this.state.data.map(item => {
+  //       if (item.SubCategory.length > 0 && item.CategoryName === selectedItem.name) {
+  //         const SubCategory = item.SubCategory.map(itemm => {
+  //           return ({ name: itemm.Name })
+  //         })
+
+  //         this.setState({ sub: SubCategory });
+  //       }
+  //     })
+  //   }
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   updateContent(newContent) {
     this.setState({
       content: newContent,
