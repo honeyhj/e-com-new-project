@@ -10,7 +10,7 @@ const ProductShow = () => {
                 <Product></Product>
             </div>
             <div className="load-more">
-                <button>Load More</button>
+                <button>Load More And</button>
             </div>
         </div>
     );
