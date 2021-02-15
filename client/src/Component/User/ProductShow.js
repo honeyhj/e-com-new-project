@@ -19,7 +19,7 @@ const ProductShow = () => {
                 "Content-Type": "application/json",
                 Accept: "application/json",
             }
-        )
+        })
         .then(data=>{
             if(loadMore){
                 setProducts([...products,data.data])
