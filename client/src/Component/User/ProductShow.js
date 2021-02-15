@@ -12,7 +12,7 @@ const ProductShow = () => {
             <div className="load-more">
                 <button>Load More And</button>
             </div>
-        </div>
+        </div> 
     );
 };
 
