@@ -8,6 +8,7 @@ import URL from './Url';
 import { set } from 'mongoose';
 const ProductShow = () => {
     const [products,setProducts] = useState([]);
+    const [psize,setpSize] = useState();
     const [skip,setSkip] = useState(0);
     const [limit,setLimit] = useState(8);
     const [loadMores,setLoadMores] = useState(false);
@@ -21,18 +22,25 @@ const ProductShow = () => {
             }
         })
         .then(data=>{
-            if(loadMore){
-                setProducts([...products,data.data])
+            if(loadMores){
+                console.log(data.data.product);
+                setProducts([...products,data.data.product])
+                setpSize(data.data.postSize)
+                setLoadMores(false)
             }else{
-                setProducts(data.data)
-            console.log(data.data);
+                setProducts(data.data.product)
+                setpSize(data.data.postSize)
+                console.log(data.data.product);
+                setLoadMores(false)
             }
         })
     }
     useEffect(()=>{
         const variables = {skip,limit}
         getAllProduct(variables)
+
     },[])
+   
     const loadMore = ()=>{
         setSkip(limit)
         setLimit(limit+8)
@@ -45,22 +53,33 @@ const ProductShow = () => {
         <div className="product-container">
             <h2>Featured Product</h2>
             <div className="product-wrp">
-                <div class="product-show">
-                    <div className="image">
-                        <Link to="/productDetails-Page">
-                        <img src={man1} alt=""/>
-                        </Link>
+
+                {products.map((item,index)=>{
+                    return(
+                        <div key={index} className="product-show">
+                        <div className="image">
+                            <Link to="/productDetails-Page">
+                            <img src={man1} alt=""/>
+                            </Link>
+                        </div>
+                    <h3>jjhjh</h3>
+                    <p>gfdgdf</p>
+                        <div className="show-addCart">
+                            <button type="button" className="btn">Add to cart</button>
+                        </div>
                     </div>
-                    <h3>Lorem ipsum dolor sit amet consectetur.</h3>
-                    <p>315 /-</p>
-                    <div className="show-addCart">
-                        <button type="button" className="btn">Add to cart</button>
-                    </div>
-                </div>
+                    )
+                })}
+               
             </div>
-            <div className="load-more">
+            {
+                psize>=8 && (
+                     <div className="load-more">
                 <button onClick={loadMore}>Load More And</button>
             </div>
+                )
+            }
+           
         </div> 
     );
 };
