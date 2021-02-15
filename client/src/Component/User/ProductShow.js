@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Product from './Product';
 import './productShow.css';
-import man1 from './img/man1.jpg'
+import man1 from './img/man1.jpg';
 import axios from 'axios';
 import URL from './Url';
 import { set } from 'mongoose';
@@ -19,7 +19,6 @@ const ProductShow = () => {
                 "Content-Type": "application/json",
                 Accept: "application/json",
             }
-        }
         )
         .then(data=>{
             if(loadMore){
