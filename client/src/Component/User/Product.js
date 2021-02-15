@@ -6,16 +6,7 @@ const Product = () => {
     
     return (
         <div id="product">
-            <div className="image">
-                <Link to="/productDetails-Page">
-                <img src={man1} alt=""/>
-                </Link>
-            </div>
-            <h3>Lorem ipsum dolor sit amet consectetur.</h3>
-            <p>315 /-</p>
-            <div className="show-addCart">
-                <button type="button" className="btn">Cart</button>
-            </div>
+            
         </div>
     );
 };

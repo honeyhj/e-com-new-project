@@ -68,10 +68,13 @@ export default class Uploadproduct extends Component {
             {name:subCat.Name}
           )
         })
-        this.setState({sub:get})
+        this.setState({sub:get,category:t.name})
       }
     })
     
+  }
+  subcategory = (e,t) =>{
+        this.setState({subcategory:t.name})
   }
 
 
