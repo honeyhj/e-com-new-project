@@ -24,7 +24,8 @@ const ProductShow = () => {
         .then(data=>{
             if(loadMores){
                 console.log(data.data.product);
-                setProducts([...products,data.data.product])
+                const  update=products.concat(data.data.product)
+                setProducts(update)
                 setpSize(data.data.postSize)
                 setLoadMores(false)
             }else{
