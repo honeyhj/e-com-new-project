@@ -6,6 +6,8 @@ import ShowCase from './ShowCase';
 import TopHeading from './TopHeading';
 
 const Home = () => {
+
+    
     return (
         <>
             <Header></Header>
