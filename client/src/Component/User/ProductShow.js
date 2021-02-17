@@ -13,8 +13,8 @@ const ProductShow = () => {
     const [limit,setLimit] = useState(8);
     const [loadMores,setLoadMores] = useState(false);
 
-    const getAllProduct = (variables)=>{
-        axios.post(`${URL}/get-products`,
+    const getAllProduct =async (variables)=>{
+      await  axios.post(`${URL}/get-products`,
         {variables},{
             headers:{
                 "Content-Type": "application/json",
@@ -22,32 +22,39 @@ const ProductShow = () => {
             }
         })
         .then(data=>{
-            if(loadMores){
-                console.log(data.data.product);
+            if(data.data.success && loadMores){
+                console.log('loadmore true')
+                console.log(data.data.postSize);
                 const  update=products.concat(data.data.product)
                 setProducts(update)
                 setpSize(data.data.postSize)
-                setLoadMores(false)
-            }else{
+                 setLoadMores(false)
+            }
+           else{
                 setProducts(data.data.product)
                 setpSize(data.data.postSize)
                 console.log(data.data.product);
-                setLoadMores(false)
+                 setLoadMores(false)
             }
         })
     }
+    
     useEffect(()=>{
         const variables = {skip,limit}
         getAllProduct(variables)
 
     },[])
-   
-    const loadMore = ()=>{
-        setSkip(limit)
-        setLimit(limit+8)
+
+    useEffect(()=>{
         const variables = {skip,limit}
-        setLoadMores(true)
         getAllProduct(variables)
+
+    },[skip])
+    
+    const loadMore = ()=>{
+        setLoadMores(true)
+        setSkip(skip+8)
+        setLimit(8)
 
     }
     return (
@@ -63,7 +70,7 @@ const ProductShow = () => {
                             <img src={man1} alt=""/>
                             </Link>
                         </div>
-                    <h3>jjhjh</h3>
+                    <h3>{item.title}</h3>
                     <p>gfdgdf</p>
                         <div className="show-addCart">
                             <button type="button" className="btn">Add to cart</button>
@@ -76,7 +83,7 @@ const ProductShow = () => {
             {
                 psize>=8 && (
                      <div className="load-more">
-                <button onClick={loadMore}>Load More And</button>
+                <button onClick={()=>loadMore()}>Load More And</button>
             </div>
                 )
             }
