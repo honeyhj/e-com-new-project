@@ -51,13 +51,13 @@ const Header = () => {
                    menus.map((item,index)=>{
                      if(item.Type === "megamenuholder"){
                        return(
-                         <>
+                         
                         <li 
                         key={index} 
                         onClick={() =>handelOnClick(item.SubCategory)}
                         >{item.CategoryName}</li>
                         
-                          </>
+                         
                         )
                      }
                    })
