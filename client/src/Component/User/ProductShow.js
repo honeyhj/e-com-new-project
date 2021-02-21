@@ -6,12 +6,16 @@ import man1 from './img/man1.jpg';
 import axios from 'axios';
 import URL from './Url';
 import { set } from 'mongoose';
-const ProductShow = () => {
+import {connect} from 'react-redux'
+
+const ProductShow = (props) => {
     const [products,setProducts] = useState([]);
     const [psize,setpSize] = useState();
     const [skip,setSkip] = useState(0);
     const [limit,setLimit] = useState(8);
     const [loadMores,setLoadMores] = useState(false);
+
+
 
     const getAllProduct =async (variables)=>{
       await  axios.post(`${URL}/get-products`,
@@ -39,17 +43,29 @@ const ProductShow = () => {
         })
     }
     
+    // useEffect(()=>{
+    //     console.log(props.termset)
+    //     const {termset}=props
+    //     const variables = {termset,skip,limit}
+    //     getAllProduct(variables)
+
+    // },[props])
+
+    
     useEffect(()=>{
+       
         const variables = {skip,limit}
-        getAllProduct(variables)
+        console.log(props)
+        props.dispatch({type:"FETCH",payload:variables})
+        // getAllProduct(variables)
 
     },[])
 
-    useEffect(()=>{
-        const variables = {skip,limit}
-        getAllProduct(variables)
+    // useEffect(()=>{
+    //     const variables = {skip,limit}
+    //     getAllProduct(variables)
 
-    },[skip])
+    // },[skip])
     
     const loadMore = ()=>{
         setLoadMores(true)
@@ -91,5 +107,11 @@ const ProductShow = () => {
         </div> 
     );
 };
+const mapStateToProps=(store)=>{
+    return ({
+        products:store.product
 
-export default ProductShow;
+    }
+    )
+}
+export default connect(mapStateToProps)(ProductShow);

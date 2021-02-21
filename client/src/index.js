@@ -5,10 +5,19 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import {createStore, applyMiddleware}  from 'redux'
+import {Provider} from 'react-redux'
+import rootreducer from "./Reducers/Rootreducer";
+import { composeWithDevTools } from 'redux-devtools-extension';
 
+
+const store=createStore(rootreducer,composeWithDevTools( applyMiddleware()));
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
     <App />
+
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

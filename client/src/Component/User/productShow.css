@@ -130,3 +130,12 @@
     height: 100%;
 }
 /**************************/
+@media screen and (max-width :991px){
+
+    #productDetails .related-product{
+       
+        grid-template-columns: 1fr 2fr 1fr;
+       
+    }
+
+}

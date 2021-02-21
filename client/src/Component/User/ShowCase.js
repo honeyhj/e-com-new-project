@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import { set } from 'mongoose';
+import React, { useEffect, useState } from 'react';
 import MainSlider from './MainSlider';
 import './user.css'
-const ShowCase = () => {
+const ShowCase = (props) => {
     const [box,setBox] = useState(false)
     const priceBox =() =>{
 
     }
+const set=(e)=>{
+if(e.key==='Enter'){
+
+props.set(e.target.value)
+}
+    }
+
+
     return (
         <div id="showCase">
             <div className="showCase-wrapper">
@@ -13,7 +22,7 @@ const ShowCase = () => {
                     <div className="box">
                         <div className="sub-box">
                             <button type="button" className="price-btn" onClick={()=>setBox(!box)}>Price Filter</button>
-                            <input type="search" name="search" placeholder="Enter search item" className="search-inp"/>
+                            <input type="search" onKeyPress={set} name="search" placeholder="Enter search item" className="search-inp"/>
                         </div>
                         {
                             box ?
