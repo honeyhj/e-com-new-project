@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Product from './Product';
 import './productShow.css';
@@ -6,19 +6,15 @@ import man1 from './img/man1.jpg';
 import axios from 'axios';
 import URL from './Url';
 import { set } from 'mongoose';
-class ProductShow extends Component {
-    constructor(){
-        super();
-        this.state={
-            products:[],
-            pSize:'',
-            skip:'',
-            limit:'',
-            loadMores:false,
-        }
-    }
-        getAllProduct = (variables)=>{
-        axios.post(`${URL}/get-products`,
+const ProductShow = () => {
+    const [products,setProducts] = useState([]);
+    const [psize,setpSize] = useState();
+    const [skip,setSkip] = useState(0);
+    const [limit,setLimit] = useState(8);
+    const [loadMores,setLoadMores] = useState(false);
+
+    const getAllProduct = async (variables)=>{
+        await  axios.post(`${URL}/get-products`,
         {variables},{
             headers:{
                 "Content-Type": "application/json",
@@ -26,39 +22,42 @@ class ProductShow extends Component {
             }
         })
         .then(data=>{
-            if(this.loadMores){
+            if(data.data.success && loadMores){
+                console.log('loadmore true')
+                console.log(data.data.postSize);
+                const  update=products.concat(data.data.product)
+                setProducts(update)
+                setpSize(data.data.postSize)
+                setLoadMores(false)
+            }
+        else{
+                setProducts(data.data.product)
+                setpSize(data.data.postSize)
                 console.log(data.data.product);
-                const  update = this.products.concat(data.data.product)
-                this.setState({products:update})
-                this.setState(this.pSize=data.data.postSize)
-                this.setState(this.loadMores=false)
-            }else{
-                this.setState(this.products=data.data.product)
-                this.setState(this.pSize=data.data.postSize)
-                console.log(data.data.product);
-                this.setState(this.loadMores=false)
-                // this.setLoadMores(false)
+                setLoadMores(false)
             }
         })
     }
-    componentDidMount =()=>{
+    useEffect(()=>{
         const variables = {skip,limit}
-        this.getAllProduct(variables)
-    }
-        loadMore = ()=>{
-        this.setState(this.skip=this.limit)
-        this.setState(this.limit+8)
+        getAllProduct(variables)
+    },[])
+    useEffect(()=>{
         const variables = {skip,limit}
-        this.setState(this.loadMores=true)
-        this.getAllProduct(variables)
+        getAllProduct(variables)
+    },[skip])
+
+    const loadMore = ()=>{
+        setLoadMores(true)
+        setSkip(skip+8)
+        setLimit(8)
     }
-    render() {
         return (
                     <div className="product-container">
             <h2>Featured Product</h2>
             <div className="product-wrp">
 
-                {this.products.map((item,index)=>{
+                {products.map((item,index)=>{
                     return(
                         <div key={index} className="product-show">
                         <div className="image">
@@ -77,9 +76,9 @@ class ProductShow extends Component {
                
             </div>
             {
-                this.pSize>=8 && (
+                psize>=8 && (
                      <div className="load-more">
-                <button onClick={this.loadMore}>Load More And</button>
+                <button onClick={()=>loadMore()}>Load More And</button>
             </div>
                 )
             }
@@ -87,7 +86,7 @@ class ProductShow extends Component {
         </div> 
         );
     }
-}
+
 
 export default ProductShow;
 // import React, { useEffect, useState } from 'react';
