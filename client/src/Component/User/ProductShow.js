@@ -14,6 +14,8 @@ const ProductShow = (props) => {
     const [skip,setSkip] = useState(0);
     const [limit,setLimit] = useState(8);
     const [loadMores,setLoadMores] = useState(false);
+    const [kib,setLoadKib] = useState(false);
+
 
 
 
