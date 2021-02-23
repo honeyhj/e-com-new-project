@@ -82,7 +82,6 @@ const ProductShow = () => {
             </div>
                 )
             }
-           
         </div> 
         );
     }
