@@ -21,7 +21,7 @@ const ProductShow=async(initialstate={products:[]},action)=>{
                 // setpSize(data.data.postSize)
                 //  setLoadMores(false)
 
-                return{products:[...initialstate.products,data.data.product]}
+                // return{products:[...initialstate.products,data.data.product]}
             }
            else{
                 // setProducts(data.data.product)

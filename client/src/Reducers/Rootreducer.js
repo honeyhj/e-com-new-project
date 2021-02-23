@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
-import ProductShow from '../Reducers/ProductsShow'
+import ProductReducer from './ProductReducer'
 const rootreducer=combineReducers({
-    ProductShow
+    ProductReducer
 })
 
 export default rootreducer;
