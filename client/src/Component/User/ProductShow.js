@@ -7,55 +7,48 @@ import axios from 'axios';
 import URL from './Url';
 import { set } from 'mongoose';
 import {connect} from 'react-redux'
-
+import {fetchProduct} from '../../Actions/ProductActions'
 const ProductShow = (props) => {
     const [products,setProducts] = useState([]);
     const [psize,setpSize] = useState();
     const [skip,setSkip] = useState(0);
     const [limit,setLimit] = useState(8);
     const [loadMores,setLoadMores] = useState(false);
-    const [checking,setChecking] = useState(false);
+    const [kib,setLoadKib] = useState(false);
 
-
-
-    const getAllProduct =async (variables)=>{
-      await  axios.post(`${URL}/get-products`,
-        {variables},{
-            headers:{
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            }
-        })
-        .then(data=>{
-            if(data.data.success && loadMores){
-                console.log('loadmore true')
-                console.log(data.data.postSize);
-                const  update=products.concat(data.data.product)
-                setProducts(update)
-                setpSize(data.data.postSize)
-                setLoadMores(false)
-            }
-        else{
-                setProducts(data.data.product)
-                setpSize(data.data.postSize)
-                console.log(data.data.product);
-                setLoadMores(false)
-            }
-        })
+    const getAllProduct = ()=>{
+        props.fetchProduct()
+    //   await  axios.post(`${URL}/get-products`,
+    //     {variables},{
+    //         headers:{
+    //             "Content-Type": "application/json",
+    //             Accept: "application/json",
+    //         }
+    //     })
+    //     .then(data=>{
+    //         if(data.data.success && loadMores){
+    //             console.log('loadmore true')
+    //             console.log(data.data.postSize);
+    //             const  update=products.concat(data.data.product)
+    //             setProducts(update)
+    //             setpSize(data.data.postSize)
+    //             setLoadMores(false)
+    //         }
+    //     else{
+    //             setProducts(data.data.product)
+    //             setpSize(data.data.postSize)
+    //             console.log(data.data.product);
+    //             setLoadMores(false)
+    //         }
+    //     })
     }
     useEffect(()=>{
-       
-        const variables = {skip,limit}
-        console.log(props)
-        props.dispatch({type:"FETCH",payload:variables})
-        // getAllProduct(variables)
-
+        getAllProduct()
     },[])
 
     // useEffect(()=>{
     //     const variables = {skip,limit}
     //     getAllProduct(variables)
-
     // },[skip])
     
     const loadMore = ()=>{
@@ -96,11 +89,10 @@ const ProductShow = (props) => {
         </div> 
     );
 };
-const mapStateToProps=(store)=>{
-    return ({
-        products:store.product
-
-    }
-    )
-}
-export default connect(mapStateToProps)(ProductShow);
+const mapStateToProps=(state)=>({
+    loading:state.productReducer.loading,
+    products:state.productReducer.products,
+    error:state.productReducer.error,
+    
+})
+export default connect(mapStateToProps,{fetchProduct})(ProductShow);
