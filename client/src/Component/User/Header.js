@@ -7,11 +7,16 @@ const Header = () => {
     const [toggleMenuBar,setToggleMenuBar] = useState(false);
   const [menus,setMenus] = useState([]);
   const [subMenus,setSubMenus] = useState([]);
-  const handelOnClick = (sub)=>{
+  const [category,setCategory]=useState('');
+  const handelOnClick = (sub,cate)=>{
+  
+   
     setToggleMenuBar(!toggleMenuBar)
     setSubMenus(sub)
+    setCategory(cate);
   }
   const getmenus =  () => {
+   
     axios.get(`${URL}/getmenus`).then((data) => {
       setMenus(data.data)
     });
@@ -33,7 +38,7 @@ const Header = () => {
                    menus.map((item,index)=>{
                      if(item.Type === "simplemenu"){
                        return(
-                        <li key={index}>{item.CategoryName}</li>
+                       <li  key={index}><Link to={`/productstore/${item.CategoryName}/${item.CategoryName}`}>{item.CategoryName}</Link></li>
                        )
                      }
                    })
@@ -42,7 +47,9 @@ const Header = () => {
                    menus.map((item,index)=>{
                      if(item.Type === "dropdownmenuholder"){
                        return(
-                        <li key={index}>{item.CategoryName}</li>
+                        <li key={index} 
+                        onClick={() =>handelOnClick(item.SubCategory,item.CategoryName)}
+                        >{item.CategoryName}</li>
                        )
                      }
                    })
@@ -54,7 +61,7 @@ const Header = () => {
                          
                         <li 
                         key={index} 
-                        onClick={() =>handelOnClick(item.SubCategory)}
+                        onClick={() =>handelOnClick(item.SubCategory,item.CategoryName)}
                         >{item.CategoryName}</li>
                         
                          
@@ -71,7 +78,7 @@ const Header = () => {
               toggleMenuBar ? <div className="sub-header">
                 {
                   subMenus.map((item,index)=>{
-                    return(<li key={index}>{item.Name}</li>)
+                    return(<li  key={index}><Link to={`/productstore/${category}/${item.Name}`}>{item.Name}</Link></li>)
                   })
                 }
               </div> : null

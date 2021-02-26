@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Switch, BrowserRouter, Router, Route, Link } from "react-router-dom";
+import Header from './Header';
 import Home from './Home';
 import ProductDetailsPage from './ProductDetailsPage';
+import Productstore from './Productstore';
 import URL from './Url';
 import './user.css';
 import Userlogin from "./Userlogin";
@@ -10,11 +12,13 @@ import Userregister from "./Userregister";
 const User = () => {
   return (
     <BrowserRouter>
+    <Header/>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/userregister" component={Userregister} />
           <Route exact path="/userlogin" component={Userlogin} />
           <Route exact path="/productDetails-Page" component={ProductDetailsPage} />
+          <Route exact path="/productstore/:category/:subcategory" component={Productstore} />
         </Switch>
       </BrowserRouter>
   );

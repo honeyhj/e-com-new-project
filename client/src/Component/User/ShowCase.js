@@ -1,18 +1,24 @@
 import { set } from 'mongoose';
 import React, { useEffect, useState } from 'react';
 import MainSlider from './MainSlider';
+import {connect} from 'react-redux'
 import './user.css'
 const ShowCase = (props) => {
     const [box,setBox] = useState(false)
+    const [product,setProduct]=useState([]);
     const priceBox =() =>{
 
     }
-const set=(e)=>{
-if(e.key==='Enter'){
+useEffect(()=>{
+setProduct(props.products)
+    },[props.products])
 
-props.set(e.target.value)
+    
+const set=(e)=>{
+    console.log(e.target.value)
+    
 }
-    }
+    
 
 
     return (
@@ -22,14 +28,14 @@ props.set(e.target.value)
                     <div className="box">
                         <div className="sub-box">
                             <button type="button" className="price-btn" onClick={()=>setBox(!box)}>Price Filter</button>
-                            <input type="search" onKeyPress={set} name="search" placeholder="Enter search item" className="search-inp"/>
+                            <input type="search" onChange={set} name="search" placeholder="Enter search item" className="search-inp"/>
                         </div>
                         {
                             box ?
                             <div className="dropBox">
                             <div>
                                 <input type="checkbox" name="" id=""/>
-                                <label>0-50</label>
+                                <label>0-50</label> 
                             </div>
                             <div>
                                 <input type="checkbox" name="" id=""/>
@@ -69,5 +75,8 @@ props.set(e.target.value)
         </div>
     );
 };
+const mapStateToProps=(state)=>({
+    products:state.ProductReducer.products
+})
 
-export default ShowCase;
+export default connect(mapStateToProps,null) (ShowCase);

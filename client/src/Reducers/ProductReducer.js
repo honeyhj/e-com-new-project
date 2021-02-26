@@ -10,14 +10,13 @@ const initialstate={
 const ProductReducer=(state=initialstate,action)=>{
 switch (action.type){
     case  types.PRODUCT_REQUEST:{
-
         return {
             ...state,
             loading:true
         }
     }
     case  types.PRODUCT_SUCCESS:{
-
+        console.log('pay',action.payload)
         return {
             ...state,
             loading:false,
@@ -25,7 +24,6 @@ switch (action.type){
         }
     }
     case  types.PRODUCT_FAILURE:{
-
         return {
             ...state,
             loading:false,
@@ -33,12 +31,8 @@ switch (action.type){
             error:action.payload
         }
     }
-
     default:return state;
 }
-
-  
-
 }
 
 export default ProductReducer;

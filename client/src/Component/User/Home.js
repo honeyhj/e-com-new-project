@@ -15,7 +15,7 @@ const setterm=(data)=>{
     
     return (
         <>
-            <Header></Header>
+           
             <TopHeading></TopHeading>
             <ShowCase set={setterm}></ShowCase>
             <ProductShow termset={term}></ProductShow>
