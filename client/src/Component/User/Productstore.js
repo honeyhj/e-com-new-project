@@ -9,7 +9,7 @@ import { set } from 'mongoose';
 import {connect} from 'react-redux'
 import {fetchProduct} from '../../Actions/ProductActions'
 const Productstore = ({loading,allproducts,error,fetchProduct}) => {
-    const [products,setProducts] = useState([]);
+    const [products,setProducts] = useState(allproducts);
     const [psize,setpSize] = useState();
     const [skip,setSkip] = useState(0);
     const [limit,setLimit] = useState(8);
@@ -18,30 +18,30 @@ const Productstore = ({loading,allproducts,error,fetchProduct}) => {
 const {subcategory,category}=useParams()
     useEffect(()=>{
         console.log(subcategory,category)
-        let data;
+    
         if(subcategory===category){
-            data= allproducts.map(item=>{
-                if(item.CategoryName===subcategory){
-                    return item;
+            allproducts.map(item=>{
+                if(item.category===subcategory){
+                   products.push(item)
                 }
             })
         }
         else{
-            data= allproducts.map(item=>{
-                if(item.CategoryName===category){
-                    item.subcategory.map(sub=>{
-                        if(sub.Name===subcategory)
-                        return sub;
-                    })
+            console.log('else')
+            allproducts.map(item=>{
+                console.log(item ,'category didnt match' ,category)
+                if(item.category===category && item.subcategory===subcategory){
+                   products.push(item);
+                    
                 }
             })
         }
       
-        console.log(data);
+        console.log('set',products)
 
-    },[subcategory])
+    },[])
     
-
+console.log('hi',products)
     
     
     const loadMore = ()=>{
@@ -54,7 +54,7 @@ const {subcategory,category}=useParams()
             <h2>Featured Product</h2>
             <div className="product-wrp">
 
-                {allproducts.map((item,index)=>{
+                { products.map((item,index)=>{
                     return(
                         <div key={index} className="product-show">
                         <div className="image">
@@ -62,7 +62,8 @@ const {subcategory,category}=useParams()
                             <img src={`http://localhost:5000/${item.Images[0]}`} alt=""/>
                             </Link>
                         </div>
-                    <h3>{item.title}</h3>
+                        <h3>{item.category}</h3>
+                    <h3>{item.subcategory}</h3>
                     <p>gfdgdf</p>
                         <div className="show-addCart">
                             <button type="button" className="btn">Add to cart</button>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import ReactDOM from "react-dom";
 
@@ -13,6 +13,7 @@ import thunk from 'redux-thunk';
 
 
 const store=createStore(rootreducer,composeWithDevTools( applyMiddleware(thunk)));
+window.store = store;
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

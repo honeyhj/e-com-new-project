@@ -1,11 +1,18 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Switch, BrowserRouter, Router, Route } from "react-router-dom";
 import Admin from "./Component/Admin/Admin";
 import User from "./Component/User/User";
 import Adminlogin from "./Component/User/Adminlogin";
+import {fetchProduct} from './Actions/ProductActions';
+import { connect, useDispatch } from "react-redux";
 
-export default class App extends Component {
-  render() {
+
+
+  function App() {
+    useEffect(()=>{
+fetchProduct();
+
+    },[])
     return (
       <BrowserRouter>
         <Switch>
@@ -15,5 +22,6 @@ export default class App extends Component {
         </Switch>
       </BrowserRouter>
     );
-  }
+  
 }
+export default connect(null,{fetchProduct})(App);

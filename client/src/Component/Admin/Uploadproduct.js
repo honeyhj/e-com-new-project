@@ -236,6 +236,17 @@ export default class Uploadproduct extends Component {
       feature,
       trend,
     } = this.state;
+    if(!Images.length){
+      return alert('PLease give a photo');
+    }
+
+    if(!category){
+      return alert('Please select a Category');
+    }
+
+    if(this.state.sub.length && !subcategory){
+      return alert('PLease select a subcategory');
+    }
     axios
       .post(
         `${URL}/uploadProduct`,
@@ -263,6 +274,23 @@ export default class Uploadproduct extends Component {
       .then((response) => {
         if (response.data.success) {
           alert("Successfully uploaded");
+         this.setState({ title:"",
+         Images:[],
+         skunumber:"",
+         description:"",
+         price:"",
+         quantity:"",
+         weaight:"",
+         category:"",
+         subcategory:"",
+         brand:"",
+         discount:"",
+         stock:"",
+         shippingdetails:"",
+         manufacturesdetails:"",
+         selectedsize:"",
+         feature:true,
+         trend:true,})
         } else {
           alert("Faild to upload");
         }

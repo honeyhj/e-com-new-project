@@ -69,7 +69,8 @@ const ProductShow = ({loading,allproducts,error,fetchProduct}) => {
                             <img src={`http://localhost:5000/${item.Images[0]}`} alt=""/>
                             </Link>
                         </div>
-                    <h3>{item.title}</h3>
+                    <h3>{item.category}</h3>
+                    <h3>{item.subcategory}</h3>
                     <p>gfdgdf</p>
                         <div className="show-addCart">
                             <button type="button" className="btn">Add to cart</button>
